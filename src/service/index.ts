@@ -1,9 +1,11 @@
 import axios from "axios";
 import { window } from "vscode";
+import { getConfiguration } from "../shared";
 import * as vscode from "vscode";
-const baseURL = "https://yapi.baidu.com";
 
 let contextReference: vscode.ExtensionContext | null = null;
+let url = getConfiguration<string>("ragdoll-yapi.yapi", "url")?.trim();
+const baseURL = url?.match(/\/$/) ? url : url + "/";
 
 export const setContext = (context: vscode.ExtensionContext) => {
   contextReference = context;

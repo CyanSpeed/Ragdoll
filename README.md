@@ -1,40 +1,27 @@
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+连接 YAPI 项目，查看接口，并生成相关代码。
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+NaN
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+插件设置项:
 
-For example:
-
-This extension contributes the following settings:
-
-- `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something
+- `ragdoll-yapi.yapi.ldapLogin`: 启用 LDAP 账号登录
+- `ragdoll-yapi.yapi.email`: 登录用户名
+- `ragdoll-yapi.yapi.password`: 登录密码
+- `ragdoll-yapi.yapi.url`: Yapi 项目地址
+- `ragdoll-yapi.yapi.pid`: Yapi 项目 ID
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+NaN
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.1.0
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
+非正式版本，只有核心功能
