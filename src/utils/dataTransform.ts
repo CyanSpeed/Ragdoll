@@ -67,7 +67,7 @@ export async function generateJsCode(api: {
   let columns = "export const COLUMNS = (languagePak, modalHandle) => [\n";
   const res_body_properties = api.resBody.properties;
 
-  for (let [key, value] of Object.entries(res_body_properties)) {
+  for (let [key, value] of Object.entries<any>(res_body_properties)) {
     console.log(key + ":" + value);
     columns += `{ title: '${value.description}', key: '${key}', dataIndex:'${key}'},\n`;
   }
@@ -84,56 +84,56 @@ export async function generateJsCode(api: {
 export function transformYapi(data: YAPI.YAPIGroup[]): APIGroup[] {
   // TODO: 参数类型JSON: yapi取req_body_other, 后续支持form类型
   const groups: APIGroup[] = [];
-  if (_.isArray(data)) {
-    data.forEach((item) => {
-      const group: APIGroup = {
-        name: item.name,
-        desc: item.desc,
-        list: [],
+
+  data.forEach((item) => {
+    const group: APIGroup = {
+      name: item.name,
+      desc: item.desc,
+      list: [],
+    };
+
+    item.list.forEach((i) => {
+      const pathParams = i.req_params ? i.req_params.map((p) => p.name) : [];
+      const queryParams = i.req_query ? i.req_query.map((p) => p.name) : [];
+
+      let resBodySchema: JSONSchema4 | null = null;
+      let reqBodySchema: JSONSchema4 | null = null;
+
+      if (i.res_body) {
+        try {
+          resBodySchema = JSON.parse(i.res_body);
+        } catch (e) {
+          console.log("Invalid res_body");
+        }
+      }
+
+      if (i.req_body_other) {
+        try {
+          reqBodySchema = JSON.parse(i.req_body_other);
+        } catch (e) {
+          console.log("Invalid req_body_other");
+        }
+      }
+
+      const api: API = {
+        path: i.path,
+        title: i.title,
+        desc: i.desc,
+        method: i.method,
+        pathParams,
+        queryParams,
+        req_query: i.req_query,
+        resBody: resBodySchema,
+        res_body: i.res_body,
+        reqBody: reqBodySchema,
+        yapi: {
+          id: i._id,
+        },
       };
-
-      item.list.forEach((i) => {
-        const pathParams = i.req_params ? i.req_params.map((p) => p.name) : [];
-        const queryParams = i.req_query ? i.req_query.map((p) => p.name) : [];
-
-        let resBodySchema: JSONSchema4 | null = null;
-        let reqBodySchema: JSONSchema4 | null = null;
-
-        if (i.res_body) {
-          try {
-            resBodySchema = JSON.parse(i.res_body);
-          } catch (e) {
-            console.log("Invalid res_body");
-          }
-        }
-
-        if (i.req_body_other) {
-          try {
-            reqBodySchema = JSON.parse(i.req_body_other);
-          } catch (e) {
-            console.log("Invalid req_body_other");
-          }
-        }
-
-        const api: API = {
-          path: i.path,
-          title: i.title,
-          desc: i.desc,
-          method: i.method,
-          pathParams,
-          queryParams,
-          req_query: i.req_query,
-          resBody: resBodySchema,
-          reqBody: reqBodySchema,
-          yapi: {
-            id: i._id,
-          },
-        };
-        group.list.push(api);
-      });
-
-      groups.push(group);
+      group.list.push(api);
     });
-  }
+
+    groups.push(group);
+  });
   return groups;
 }

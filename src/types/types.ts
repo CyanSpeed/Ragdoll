@@ -26,8 +26,8 @@ export interface API {
   pathParams: string[];
   queryParams: string[];
   resBody: JSONSchema4 | null;
-  req_query: string;
-  res_Body: string;
+  req_query: any[];
+  res_body: string;
   reqBody: JSONSchema4 | null;
   yapi?: {
     id: number;

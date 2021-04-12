@@ -10,10 +10,9 @@ export async function syncFromYapi(
   context: vscode.ExtensionContext
 ): Promise<any> {
   // 读取配置文件
-  const isLdapLogin = getConfiguration<boolean>(
-    "ragdoll-yapi.yapi",
-    "ldapLogin"
-  );
+  const isLdapLogin =
+    getConfiguration<boolean>("ragdoll-yapi.yapi", "ldapLogin") === true;
+
   const email = getConfiguration<string>("ragdoll-yapi.yapi", "email");
   const password = getConfiguration<string>("ragdoll-yapi.yapi", "password");
   let url = getConfiguration<string>("ragdoll-yapi.yapi", "url")?.trim();
@@ -48,7 +47,7 @@ export async function getYapiData(
   let groups: APIGroup[] = [];
   // 登录获取cookie
 
-  let response = null;
+  let response: any = null;
 
   if (isLdapLogin) {
     response = await instance.post(`${url}api/user/login_by_ldap`, {
@@ -65,7 +64,7 @@ export async function getYapiData(
     return [];
   }
 
-  const apiResponse = await instance.get(
+  const apiResponse: any = await instance.get(
     `/api/plugin/export?type=json&pid=${pid}&status=all&isWiki=false`
   );
 
