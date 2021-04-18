@@ -20,11 +20,11 @@ export async function syncFromYapi(
   const pid = getConfiguration<string>("ragdoll-yapi.yapi", "pid")?.trim();
 
   if (!(email && password && url && pid)) {
-    console.error("APIViewer: Missing some configurations!");
+    console.error("Ragdoll: Missing some configurations!");
     return [];
   }
 
-  vscode.window.showInformationMessage("APIViewer: Syncing data from Yapi");
+  vscode.window.showInformationMessage("Ragdoll: Syncing data from Yapi");
   const apiGroups = await getYapiData(isLdapLogin, url, email, password, pid);
 
   const provider = new YapiView(context, apiGroups);
@@ -32,7 +32,7 @@ export async function syncFromYapi(
     treeDataProvider: provider,
   });
 
-  vscode.window.showInformationMessage(`APIViewer: Sync from yapi successful`);
+  vscode.window.showInformationMessage(`Ragdoll: Sync from yapi successful`);
   //return await getYapiData(url, email, password, pid);
   await context.globalState.update("apiGroups", apiGroups);
 }
@@ -60,7 +60,7 @@ export async function getYapiData(
 
   const responseJson = JSON.parse(response.body);
   if (responseJson.errcode === 405) {
-    console.error("APIViewer: Incorrect account or password");
+    console.error("Ragdoll: Incorrect account or password");
     return [];
   }
 
@@ -72,7 +72,7 @@ export async function getYapiData(
     // const data = JSON.parse(apiResponse[0]);
     groups = transformYapi(apiResponse);
   } catch (e) {
-    console.error("APIViewer: Invalid data format");
+    console.error("Ragdoll: Invalid data format");
     return [];
   }
 
