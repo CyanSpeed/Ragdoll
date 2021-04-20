@@ -29,7 +29,11 @@ axios.defaults.withCredentials = true;
 instance.interceptors.request.use((value) => {
   //let testCookie = "";
   //value.headers.cookie = testCookie;
-  value.headers.cookie = contextReference?.globalState.get("loginCookie");
+  const loginCookies = contextReference?.globalState.get("loginCookie");
+  if (loginCookies) {
+    value.headers.cookie = contextReference?.globalState.get("loginCookie");
+  }
+
   console.log("请求参数", value);
   return value;
 });

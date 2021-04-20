@@ -74,7 +74,7 @@
       "view/title": [
         {
           "command": "ragdoll.login",
-          "when": "view == yapiView",
+          "when": "false",
           "group": "navigation@1"
         },
         {

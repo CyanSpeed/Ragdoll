@@ -58,9 +58,8 @@ export async function getYapiData(
     response = await instance.post(`${url}api/user/login`, { email, password });
   }
 
-  const responseJson = JSON.parse(response.body);
-  if (responseJson.errcode === 405) {
-    console.error("Ragdoll: Incorrect account or password");
+  if (response.errcode !== 0) {
+    console.error("Ragdoll: login failed, check account or password");
     return [];
   }
 

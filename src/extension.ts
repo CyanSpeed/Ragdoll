@@ -8,6 +8,7 @@ import { generateTableColumns } from "./command/generateTableColumns";
 import { login } from "./command/login";
 import { sync } from "glob";
 import { syncFromYapi } from "./command/sync";
+import { setContext } from "./service";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -16,6 +17,8 @@ export function activate(context: vscode.ExtensionContext) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "ragdoll" is now active!');
+    // 给 service 传递上下文
+    setContext(context);
 
     // -------- 命令相关 -------------
     const refreshCommand = vscode.commands.registerCommand(
