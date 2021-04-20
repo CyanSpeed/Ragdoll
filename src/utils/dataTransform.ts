@@ -4,6 +4,11 @@ import { JSONSchema4 } from "json-schema";
 const folderArray: { name: any; apis: any[] }[] = [];
 const apiArray = [];
 
+export enum CodeType {
+  SearchItems,
+  TableColumn,
+}
+
 const processData = (apiData: any[]) => {
   apiData.forEach((folder: { list: any[]; name: any }) => {
     const apis: {
@@ -50,35 +55,42 @@ const transformJsonString = (str: string) => {
 console.log("folderArray", folderArray);
 // console.log("apiArray", apiArray);
 
-export async function generateJsCode(api: {
-  req_query: any[];
-  res_body: any;
-  resBody: any;
-}) {
+export async function generateJsCode(
+  api: {
+    req_query: any[];
+    res_body: any;
+    resBody: any;
+  },
+  codeType: CodeType
+) {
   console.log("generateJsCode", api);
 
-  let searchItems = "export const SEARCH_ITEMS = () => [\n";
-  api.req_query.forEach((item: { desc: any; name: any }) => {
-    searchItems += `{ title: '${item.desc}', key: '${item.name}'},\n`;
-  });
-  searchItems += "];";
+  switch (codeType) {
+    case CodeType.SearchItems:
+      let searchItems = "export const SEARCH_ITEMS = () => [\n";
+      api.req_query.forEach((item: { desc: any; name: any }) => {
+        searchItems += `{ title: '${item.desc}', key: '${item.name}'},\n`;
+      });
+      searchItems += "];";
+      return searchItems;
+    case CodeType.TableColumn:
+      console.log("generateJsCode_columns", api.resBody.properties);
+      let columns = "export const COLUMNS = (languagePak, modalHandle) => [\n";
+      const res_body_properties = api.resBody.properties;
 
-  console.log("generateJsCode_columns", api.resBody.properties);
-  let columns = "export const COLUMNS = (languagePak, modalHandle) => [\n";
-  const res_body_properties = api.resBody.properties;
+      for (let [key, value] of Object.entries<any>(res_body_properties)) {
+        console.log(key + ":" + value);
+        columns += `{ title: '${value.description}', key: '${key}', dataIndex:'${key}'},\n`;
+      }
 
-  for (let [key, value] of Object.entries<any>(res_body_properties)) {
-    console.log(key + ":" + value);
-    columns += `{ title: '${value.description}', key: '${key}', dataIndex:'${key}'},\n`;
+      columns +=
+        "{\n key: 'operation',\n dataIndex: 'operation',\n title: languagePak.operation,\n fixed: 'right'\n},\n";
+      columns += "];";
+      return columns;
+    default:
+      break;
   }
-
-  columns +=
-    "{\n key: 'operation',\n dataIndex: 'operation',\n title: languagePak.operation,\n fixed: 'right'\n},\n";
-  columns += "];";
-
-  console.log("search", searchItems);
-  console.log("columns", columns);
-  return { searchItems, columns };
+  return "";
 }
 
 export function transformYapi(data: YAPI.YAPIGroup[]): APIGroup[] {

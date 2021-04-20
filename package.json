@@ -2,7 +2,7 @@
   "name": "ragdoll-yapi",
   "displayName": "Ragdoll-Yapi",
   "description": "a YAPI extention for Visual Studio Code",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "cyan-speed",
   "engines": {
     "vscode": "^1.45.0"

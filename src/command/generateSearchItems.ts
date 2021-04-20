@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as vscode from "vscode";
 import { instance } from "../service";
-import { generateJsCode } from "../utils/dataTransform";
+import { CodeType, generateJsCode } from "../utils/dataTransform";
 
 export async function generateSearchItems(
   context: vscode.ExtensionContext
@@ -35,15 +35,15 @@ export async function generateSearchItems(
         return;
       }
 
-      const searchItemsCode = await generateJsCode(selectApi.api);
-      console.log("searchItemsCode", searchItemsCode.searchItems);
+      const searchItemsCode = await generateJsCode(
+        selectApi.api,
+        CodeType.SearchItems
+      );
+      console.log("searchItemsCode", searchItemsCode);
       const editor = vscode.window.activeTextEditor;
       editor?.edit((editBuilder) => {
         const pos = editor.selection.active;
-        editBuilder.insert(
-          pos,
-          searchItemsCode.searchItems + "\n\n" + searchItemsCode.columns
-        );
+        editBuilder.insert(pos, searchItemsCode + "\n\n");
       });
     }
   } catch (e) {
