@@ -16,7 +16,7 @@ import { APINode, ApiPropsNode, GroupNode, TreeNode } from "./treeviewNode";
 import { API } from "../types/types";
 import dayjs = require("dayjs");
 
-export class YapiView implements TreeDataProvider<TreeNode> {
+export class RagdollTreeView implements TreeDataProvider<TreeNode> {
   apiGroups: any;
   constructor(private context: vscode.ExtensionContext, apiGroups: any[]) {
     this.apiGroups = apiGroups;

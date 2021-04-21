@@ -4,7 +4,7 @@ import { getConfiguration } from "../shared";
 import { APIGroup } from "../types/types";
 import { instance } from "../service";
 import { transformYapi } from "../utils/dataTransform";
-import { YapiView } from "../treeview/yapiViewTreeView";
+import { RagdollTreeView } from "../treeview/ragdollTreeView";
 
 export async function syncFromYapi(
   context: vscode.ExtensionContext
@@ -27,8 +27,8 @@ export async function syncFromYapi(
   vscode.window.showInformationMessage("Ragdoll: Syncing data from Yapi");
   const apiGroups = await getYapiData(isLdapLogin, url, email, password, pid);
 
-  const provider = new YapiView(context, apiGroups);
-  vscode.window.createTreeView("yapiView", {
+  const provider = new RagdollTreeView(context, apiGroups);
+  vscode.window.createTreeView("ragdollTreeView", {
     treeDataProvider: provider,
   });
 

@@ -17,7 +17,7 @@
   ],
   "license": "MIT",
   "activationEvents": [
-    "onView:yapiView",
+    "onView:ragdollTreeView",
     "onCommand:ragdoll.login",
     "onCommand:ragdoll.refresh",
     "*"
@@ -79,7 +79,7 @@
         },
         {
           "command": "ragdoll.refresh",
-          "when": "view == yapiView",
+          "when": "view == ragdollTreeView",
           "group": "navigation@1"
         }
       ],
@@ -92,25 +92,25 @@
       ]
     },
     "views": {
-      "yapiView": [
+      "ragdollTreeView": [
         {
-          "id": "yapiView",
-          "name": "Ragdool-Yapi"
+          "id": "ragdollTreeView",
+          "name": "Ragdoll-Yapi"
         }
       ]
     },
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "yapiView",
+          "id": "ragdollTreeView",
           "title": "YAPI",
-          "icon": "media/yapiView.svg"
+          "icon": "media/ragdollTreeView.svg"
         }
       ]
     },
     "viewsWelcome": [
       {
-        "view": "yapiView",
+        "view": "ragdollTreeView",
         "contents": "loading..."
       }
     ],

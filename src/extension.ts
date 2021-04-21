@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import { window } from "vscode";
-import { YapiView } from "./treeview/yapiViewTreeView";
+import { RagdollTreeView } from "./treeview/ragdollTreeView";
 import { generateSearchItems } from "./command/generateSearchItems";
 import { generateTableColumns } from "./command/generateTableColumns";
 import { login } from "./command/login";
@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     const refreshCommand = vscode.commands.registerCommand(
       "ragdoll.refresh",
       async () => {
-        // yapiViewProvider.refresh();
+        // ragdollTreeViewProvider.refresh();
         syncFromYapi(context);
         vscode.window.showInformationMessage("刷新");
       }
@@ -42,10 +42,10 @@ export function activate(context: vscode.ExtensionContext) {
       generateTableColumns(context);
     });
 
-    // -------- YapiView 相关 -------------
-    const yapiViewProvider = new YapiView(context, []);
-    window.createTreeView("yapiView", {
-      treeDataProvider: yapiViewProvider,
+    // -------- ragdollTreeView 相关 -------------
+    const ragdollTreeViewProvider = new RagdollTreeView(context, []);
+    window.createTreeView("ragdollTreeView", {
+      treeDataProvider: ragdollTreeViewProvider,
     });
 
     // The command has been defined in the package.json file
