@@ -37,9 +37,9 @@ export async function generateTableColumns(
 
       const columnsCode = await generateJsCode(
         selectApi.api,
-        CodeType.SearchItems
+        CodeType.TableColumn
       );
-      console.log("searchItemsCode", columnsCode);
+      console.log("columnsCode", columnsCode);
       const editor = vscode.window.activeTextEditor;
       editor?.edit((editBuilder) => {
         const pos = editor.selection.active;
