@@ -12,6 +12,31 @@ import * as vscode from "vscode";
 import * as _path_ from "path";
 import { API } from "../types/types";
 
+const getIconPath = {
+  light: _path_.join(__filename, "..", "..", "media", "GET.svg"),
+  dark: _path_.join(__filename, "..", "..", "media", "GET.svg"),
+};
+
+const postIconPath = {
+  light: _path_.join(__filename, "..", "..", "media", "POST.svg"),
+  dark: _path_.join(__filename, "..", "..", "media", "POST.svg"),
+};
+
+const putIconPath = {
+  light: _path_.join(__filename, "..", "..", "media", "PUT.svg"),
+  dark: _path_.join(__filename, "..", "..", "media", "PUT.svg"),
+};
+
+const deleteIconPath = {
+  light: _path_.join(__filename, "..", "..", "media", "DEL.svg"),
+  dark: _path_.join(__filename, "..", "..", "media", "DEL.svg"),
+};
+
+const defaultIconPath = {
+  light: _path_.join(__filename, "..", "..", "resources", "api.svg"),
+  dark: _path_.join(__filename, "..", "..", "resources", "api.svg"),
+};
+
 export abstract class TreeNode extends vscode.TreeItem {
   constructor(
     public label: string,
@@ -44,11 +69,6 @@ export class GroupNode extends TreeNode {
 }
 
 export class APINode extends TreeNode {
-  iconPath = {
-    light: _path_.join(__filename, "..", "..", "resources", "api.svg"),
-    dark: _path_.join(__filename, "..", "..", "resources", "api.svg"),
-  };
-
   constructor(
     public label: string,
     desc: string,
@@ -56,10 +76,28 @@ export class APINode extends TreeNode {
     public readonly collapsibleState: vscode.TreeItemCollapsibleState
   ) {
     super(label, desc, "api", collapsibleState);
-    this.label = `${props.method} ${props.path}`;
+    this.label = ` ${props.path}`;
     this.contextValue = "APINode";
     this.tooltip = `${this.label}`;
     this.description = `${this.desc}`;
+
+    switch (props.method) {
+      case "GET":
+        this.iconPath = getIconPath;
+        break;
+      case "POST":
+        this.iconPath = postIconPath;
+        break;
+      case "PUT":
+        this.iconPath = putIconPath;
+        break;
+      case "DELETE":
+        this.iconPath = deleteIconPath;
+        break;
+      default:
+        this.iconPath = defaultIconPath;
+        break;
+    }
   }
 }
 
