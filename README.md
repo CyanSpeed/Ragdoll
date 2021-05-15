@@ -21,6 +21,10 @@ NaN
 NaN
 
 ## Release Notes
+### 0.1.4
+正式提供两大功能：
+1.连接 YAPI 项目，浏览接口。
+2.生成 Antd 配置代码，SearchItems 和 Columns。
 
 ### 0.1.0
 
