@@ -4,3 +4,4 @@ node_modules
 .vscode-test/
 *.vsix
 src/config.ts
+src/testKey.ts

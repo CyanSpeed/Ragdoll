@@ -56,6 +56,15 @@
           "light": "media/light/login.svg",
           "dark": "media/dark/login.svg"
         }
+      },
+      {
+        "command": "ragdoll.openInBrowser",
+        "title": "Open in browser",
+        "category": "ragdoll",
+        "icon": {
+          "dark": "media/light/edit.svg",
+          "light": "media/dark/edit.svg"
+        }
       }
     ],
     "menus": {
@@ -86,7 +95,7 @@
       "view/item/context": [
         {
           "command": "ragdoll.openInBrowser",
-          "when": "viewItem == APINode && api-platform == 'Yapi'",
+          "when": "view == ragdollTreeView && viewItem == APINode",
           "group": "inline@2"
         }
       ]

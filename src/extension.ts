@@ -6,6 +6,7 @@ import { RagdollTreeView } from "./treeview/ragdollTreeView";
 import { generateSearchItems } from "./command/generateSearchItems";
 import { generateTableColumns } from "./command/generateTableColumns";
 import { login } from "./command/login";
+import { openInBrowser } from "./command/openInBrowser";
 import { sync } from "glob";
 import { syncFromYapi } from "./command/sync";
 import { setContext } from "./service";
@@ -35,6 +36,12 @@ export function activate(context: vscode.ExtensionContext) {
         login(context);
       }
     );
+    const openInBrowserCommand = vscode.commands.registerCommand(
+      "ragdoll.openInBrowser",
+      async (node) => {
+        openInBrowser(context, node);
+      }
+    );
     vscode.commands.registerCommand("ragdoll.generateSearchItems", () => {
       generateSearchItems(context);
     });
@@ -61,7 +68,12 @@ export function activate(context: vscode.ExtensionContext) {
       }
     );
 
-    context.subscriptions.push(disposable, refreshCommand, loginCommand);
+    context.subscriptions.push(
+      disposable,
+      refreshCommand,
+      loginCommand,
+      openInBrowserCommand
+    );
     syncFromYapi(context);
   } catch (error) {
     window.showInformationMessage(error);
