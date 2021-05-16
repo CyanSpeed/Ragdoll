@@ -2,6 +2,7 @@ import axios from "axios";
 import { window } from "vscode";
 import { getConfiguration } from "../shared";
 import * as vscode from "vscode";
+//import { testCookie } from "../testKey";
 
 let contextReference: vscode.ExtensionContext | null = null;
 let url = getConfiguration<string>("ragdoll-yapi.yapi", "url")?.trim();
@@ -27,12 +28,15 @@ export const instance = axios.create({
 axios.defaults.withCredentials = true;
 
 instance.interceptors.request.use((value) => {
-  //let testCookie = "";
-  //value.headers.cookie = testCookie;
   const loginCookies = contextReference?.globalState.get("loginCookie");
   if (loginCookies) {
     value.headers.cookie = contextReference?.globalState.get("loginCookie");
   }
+
+  // let env = process.env.NODE_ENV;
+  // if (env === "development") {
+  //   value.headers.cookie = testCookie;
+  // }
 
   console.log("请求参数", value);
   return value;

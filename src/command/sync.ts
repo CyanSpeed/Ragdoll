@@ -58,9 +58,13 @@ export async function getYapiData(
     response = await instance.post(`${url}api/user/login`, { email, password });
   }
 
-  if (response.errcode !== 0) {
-    console.error("Ragdoll: login failed, check account or password");
-    return [];
+  let env = process.env.NODE_ENV;
+
+  if (env === "production") {
+    if (response.errcode !== 0) {
+      console.error("Ragdoll: login failed, check account or password");
+      return [];
+    }
   }
 
   const apiResponse: any = await instance.get(

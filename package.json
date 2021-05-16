@@ -62,8 +62,8 @@
         "title": "Open in browser",
         "category": "ragdoll",
         "icon": {
-          "dark": "media/light/edit.svg",
-          "light": "media/dark/edit.svg"
+          "dark": "media/edgeLogo.png",
+          "light": "media/edgeLogo.png"
         }
       }
     ],
